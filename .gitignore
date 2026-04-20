@@ -1,0 +1,46 @@
+# Virtual environment
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Data (raw data tracked by DVC, not Git)
+data/raw/*
+data/processed/*
+data/production/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/production/.gitkeep
+
+# Models (tracked by DVC)
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.pt
+
+# MLflow
+mlruns/
+
+# Logs
+logs/
+*.log
+
+# Airflow
+airflow/logs/
+
+# Kaggle
+kaggle.json
+
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/

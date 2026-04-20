@@ -1,0 +1,5 @@
+# Data Manifest — Plant Disease Detection Project
+# Format: VERSION | DATE | SCRIPT | INPUT | OUTPUT | NOTES
+# ============================================================
+
+v0_raw | YYYY-MM-DD | kaggle API | abdallahalidev/plantvillage-dataset | data/raw/plantvillage/ | Original download, untouched

@@ -1,0 +1,48 @@
+# Project Metadata
+project_name: "PlantDiseaseDetection"
+author: "Your Name"
+version: "1.0"
+
+# Data Paths
+data:
+  raw_path: "data/raw/plantvillage/"
+  processed_dir: "data/processed/"
+  production_dir: "data/production/"
+  current_version: "v1"
+  image_size: 224
+  batch_size: 32
+  test_split: 0.10
+  val_split: 0.15
+  random_seed: 42
+  min_images_per_class: 3
+
+# Model Parameters (overridden by params.yaml for DVC)
+model:
+  architecture: "efficientnet_b0"
+  num_classes: 38
+  pretrained: true
+  fine_tune_layers: 2
+
+# Deployment Settings
+deployment:
+  mlflow_tracking_uri: "http://127.0.0.1:5000"
+  mlflow_experiment_name: "plant-disease-detection"
+  model_serving_port: 5001
+  api_port: 8000
+  threshold: 0.75
+
+# Monitoring
+monitoring:
+  prometheus_port: 8001
+  alert_cpu_threshold: 80
+  alert_latency_ms: 2000
+  alert_error_rate: 0.05
+
+# Airflow
+airflow:
+  input_watch_dir: "data/airflow_input/"
+  db_path: "data/plantdisease.db"
+  pool_name: "scraper_pool"
+  pool_size: 3
+  dry_pipe_hours: 12
+  batch_notify_threshold: 10
