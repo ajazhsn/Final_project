@@ -3,3 +3,4 @@
 # ============================================================
 
 v0_raw | YYYY-MM-DD | kaggle API | abdallahalidev/plantvillage-dataset | data/raw/plantvillage/ | Original download, untouchedv0_raw | 2026-04-20 | manual copy | PlantVillage 6-class subset | data/raw/ | 6651 images: Potato(Early,Late,Healthy) + Tomato(Early,Late,Healthy)
+v1_resized | 2026-04-20 | src/data_prep.py | data/raw/ | data/processed/v1/ | Resized to 224px — Train:4991 Val:996 Test:664
