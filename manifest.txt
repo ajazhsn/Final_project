@@ -2,4 +2,4 @@
 # Format: VERSION | DATE | SCRIPT | INPUT | OUTPUT | NOTES
 # ============================================================
 
-v0_raw | YYYY-MM-DD | kaggle API | abdallahalidev/plantvillage-dataset | data/raw/plantvillage/ | Original download, untouched
+v0_raw | YYYY-MM-DD | kaggle API | abdallahalidev/plantvillage-dataset | data/raw/plantvillage/ | Original download, untouchedv0_raw | 2026-04-20 | manual copy | PlantVillage 6-class subset | data/raw/ | 6651 images: Potato(Early,Late,Healthy) + Tomato(Early,Late,Healthy)
