@@ -1,0 +1,28 @@
+{
+  "model_type": "CustomCNN",
+  "architecture": "3-block CNN",
+  "train_date": "2026-04-21T08:53:42.982537",
+  "best_val_macro_f1": 0.8684641279461124,
+  "train_time_seconds": 804.4628493785858,
+  "class_names": [
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_healthy"
+  ],
+  "mlflow_run_id": "062b2c0626484fc8ab7711f51a8d0ee8",
+  "params": {
+    "architecture": "custom_cnn",
+    "learning_rate": 0.001,
+    "epochs": 15,
+    "batch_size": 32,
+    "num_filters": [
+      32,
+      64,
+      128
+    ],
+    "random_seed": 42
+  }
+}

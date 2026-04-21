@@ -31,11 +31,11 @@ train_mlp:
   random_seed: 42
 
 train_cnn:
-  architecture: "efficientnet_b0"
+  architecture: "custom_cnn"
   learning_rate: 0.001
-  epochs: 20
+  epochs: 15
   batch_size: 32
-  fine_tune_layers: 2
+  num_filters: [32, 64, 128]
   random_seed: 42
 
 evaluate:

@@ -1,0 +1,32 @@
+name: plant-disease-detection
+
+python_env: python_env.yaml
+
+entry_points:
+  train_svm:
+    parameters:
+      C: {type: float, default: 1.0}
+      kernel: {type: string, default: "rbf"}
+      max_per_class: {type: int, default: 80}
+    command: "python3 src/train.py --model svm"
+
+  train_mlp:
+    parameters:
+      learning_rate: {type: float, default: 0.001}
+      epochs: {type: int, default: 20}
+      max_per_class: {type: int, default: 80}
+    command: "python3 src/train.py --model mlp"
+
+  train_cnn:
+    parameters:
+      learning_rate: {type: float, default: 0.001}
+      epochs: {type: int, default: 15}
+      batch_size: {type: int, default: 32}
+      max_per_class: {type: int, default: 80}
+    command: "python3 src/train.py --model cnn"
+
+  train_all:
+    command: >
+      python3 src/train.py --model svm &&
+      python3 src/train.py --model mlp &&
+      python3 src/train.py --model cnn

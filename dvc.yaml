@@ -1,0 +1,95 @@
+stages:
+  prepare:
+    cmd: python3 src/data_prep.py
+    deps:
+      - src/data_prep.py
+      - data/raw
+      - config.yaml
+      - params.yaml
+    params:
+      - params.yaml:
+        - prepare.image_size
+        - prepare.test_split
+        - prepare.val_split
+        - prepare.random_seed
+        - prepare.min_images_per_class
+        - prepare.max_images_per_class
+    outs:
+      - data/processed/v1
+
+  train_svm:
+    cmd: python3 src/train.py --model svm
+    deps:
+      - src/train.py
+      - data/processed/v1
+      - config.yaml
+      - params.yaml
+    params:
+      - params.yaml:
+        - train_svm.feature_type
+        - train_svm.C
+        - train_svm.kernel
+        - train_svm.random_seed
+    outs:
+      - models/svm_model.pkl
+    metrics:
+      - metrics/svm_metrics.json:
+          cache: false
+
+  train_mlp:
+    cmd: python3 src/train.py --model mlp
+    deps:
+      - src/train.py
+      - data/processed/v1
+      - config.yaml
+      - params.yaml
+    params:
+      - params.yaml:
+        - train_mlp.hidden_layers
+        - train_mlp.learning_rate
+        - train_mlp.epochs
+        - train_mlp.batch_size
+        - train_mlp.random_seed
+    outs:
+      - models/mlp_model.pkl
+    metrics:
+      - metrics/mlp_metrics.json:
+          cache: false
+
+  train_cnn:
+    cmd: python3 src/train.py --model cnn
+    deps:
+      - src/train.py
+      - data/processed/v1
+      - config.yaml
+      - params.yaml
+    params:
+      - params.yaml:
+        - train_cnn.learning_rate
+        - train_cnn.epochs
+        - train_cnn.batch_size
+        - train_cnn.random_seed
+    outs:
+      - models/cnn_model.pt
+    metrics:
+      - metrics/cnn_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python3 src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - data/processed/v1
+      - models/svm_model.pkl
+      - models/mlp_model.pkl
+      - models/cnn_model.pt
+      - config.yaml
+      - params.yaml
+    metrics:
+      - metrics/final_metrics.json:
+          cache: false
+    plots:
+      - plots/confusion_matrix.json:
+          cache: false
+      - plots/f1_scores.json:
+          cache: false

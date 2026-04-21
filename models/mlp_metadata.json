@@ -1,0 +1,29 @@
+{
+  "model_type": "MLP",
+  "feature_type": "flattened_pixels",
+  "train_date": "2026-04-21T05:33:07.309802",
+  "val_accuracy": 0.5853080568720379,
+  "val_macro_f1": 0.5745754418925033,
+  "train_time_seconds": 191.26994156837463,
+  "class_names": [
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_healthy"
+  ],
+  "mlflow_run_id": "6de7b2e460c748558931dd888d934689",
+  "params": {
+    "hidden_layers": [
+      512,
+      256,
+      128
+    ],
+    "dropout": 0.3,
+    "learning_rate": 0.001,
+    "epochs": 20,
+    "batch_size": 32,
+    "random_seed": 42
+  }
+}

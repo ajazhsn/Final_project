@@ -1,0 +1,6 @@
+{
+  "val_accuracy": 0.8578199052132701,
+  "val_macro_f1": 0.8684641279461124,
+  "train_time_seconds": 804.4628493785858,
+  "mlflow_run_id": "062b2c0626484fc8ab7711f51a8d0ee8"
+}

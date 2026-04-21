@@ -1,0 +1,25 @@
+{
+  "model_type": "SVM",
+  "feature_type": "HOG",
+  "train_date": "2026-04-21T04:23:28.957845",
+  "val_accuracy": 0.6421800947867299,
+  "val_macro_f1": 0.6145724288269658,
+  "train_time_seconds": 37.30784749984741,
+  "class_names": [
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_healthy"
+  ],
+  "mlflow_run_id": "03100958e25c45cfa014b88a091df2a5",
+  "params": {
+    "feature_type": "hog",
+    "hog_orientations": 9,
+    "hog_pixels_per_cell": 8,
+    "C": 1.0,
+    "kernel": "rbf",
+    "random_seed": 42
+  }
+}
