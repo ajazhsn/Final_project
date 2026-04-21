@@ -30,3 +30,13 @@ entry_points:
       python3 src/train.py --model svm &&
       python3 src/train.py --model mlp &&
       python3 src/train.py --model cnn
+
+  finetune_cnn:
+    parameters:
+      learning_rate: {type: float, default: 0.0005}
+      epochs: {type: int, default: 25}
+      batch_size: {type: int, default: 32}
+      max_per_class: {type: int, default: 150}
+      registered_model: {type: string, default: "PlantDiseaseDetector"}
+      model_alias: {type: string, default: "champion"}
+    command: "python3 src/finetune.py --learning_rate {learning_rate} --epochs {epochs} --batch_size {batch_size} --max_per_class {max_per_class} --registered_model {registered_model} --model_alias {model_alias}"  

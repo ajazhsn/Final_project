@@ -1,0 +1,7 @@
+{
+  "val_accuracy": 0.8963730569948186,
+  "val_macro_f1": 0.8989248234628763,
+  "train_time_seconds": 2456.2204790115356,
+  "mlflow_run_id": "18cb09fbc20e435c9613406d4f0d276a",
+  "finetuned_from": "PlantDiseaseDetector@champion"
+}
