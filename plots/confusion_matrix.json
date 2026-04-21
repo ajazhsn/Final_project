@@ -1,0 +1,182 @@
+[
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Potato___Early_blight",
+    "count": 96
+  },
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Potato___Late_blight",
+    "count": 3
+  },
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Potato___healthy",
+    "count": 0
+  },
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Tomato_Early_blight",
+    "count": 1
+  },
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Tomato_Late_blight",
+    "count": 0
+  },
+  {
+    "actual": "Potato___Early_blight",
+    "predicted": "Tomato_healthy",
+    "count": 0
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Potato___Early_blight",
+    "count": 3
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Potato___Late_blight",
+    "count": 91
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Potato___healthy",
+    "count": 1
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Tomato_Early_blight",
+    "count": 2
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Tomato_Late_blight",
+    "count": 3
+  },
+  {
+    "actual": "Potato___Late_blight",
+    "predicted": "Tomato_healthy",
+    "count": 0
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Potato___Early_blight",
+    "count": 0
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Potato___Late_blight",
+    "count": 0
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Potato___healthy",
+    "count": 15
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Tomato_Early_blight",
+    "count": 0
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Tomato_Late_blight",
+    "count": 0
+  },
+  {
+    "actual": "Potato___healthy",
+    "predicted": "Tomato_healthy",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Potato___Early_blight",
+    "count": 3
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Potato___Late_blight",
+    "count": 6
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Potato___healthy",
+    "count": 2
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Tomato_Early_blight",
+    "count": 82
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Tomato_Late_blight",
+    "count": 7
+  },
+  {
+    "actual": "Tomato_Early_blight",
+    "predicted": "Tomato_healthy",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Potato___Early_blight",
+    "count": 4
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Potato___Late_blight",
+    "count": 10
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Potato___healthy",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Tomato_Early_blight",
+    "count": 10
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Tomato_Late_blight",
+    "count": 165
+  },
+  {
+    "actual": "Tomato_Late_blight",
+    "predicted": "Tomato_healthy",
+    "count": 1
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Potato___Early_blight",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Potato___Late_blight",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Potato___healthy",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Tomato_Early_blight",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Tomato_Late_blight",
+    "count": 0
+  },
+  {
+    "actual": "Tomato_healthy",
+    "predicted": "Tomato_healthy",
+    "count": 159
+  }
+]
