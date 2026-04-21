@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  backend:
+    image: plant-disease-api:latest
+    ports:
+      - "8000-8002:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./logs:/app/logs
+      - ./models:/app/models
+    restart: unless-stopped
+
+  frontend:
+    image: python:3.12-slim
+    container_name: plant-disease-frontend
+    working_dir: /app
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - API_BASE=http://backend:8000
+    volumes:
+      - .:/app
+    command: >
+      bash -c "pip install streamlit requests Pillow --quiet &&
+               streamlit run app.py
+               --server.port 8501
+               --server.address 0.0.0.0"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    name: plant-disease-network

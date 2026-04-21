@@ -1,0 +1,14 @@
+venv/
+.git/
+data/raw/
+data/processed/v1/train/
+data/processed/v1/val/
+data/processed/v1/test/
+mlruns/
+mlartifacts/
+__pycache__/
+*.pyc
+.dvc/
+notebooks/
+logs/
+*.log
