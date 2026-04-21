@@ -44,3 +44,7 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints/
 notebooks/.ipynb_checkpoints/
+
+mlartifacts/
+mlflow.db
+data/production/
