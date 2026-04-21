@@ -4,7 +4,7 @@ prepare:
   val_split: 0.15
   random_seed: 42
   min_images_per_class: 3
-  max_images_per_class: 80
+  max_images_per_class: 150
 
 transform:
   augment: true
@@ -32,8 +32,8 @@ train_mlp:
 
 train_cnn:
   architecture: "custom_cnn"
-  learning_rate: 0.001
-  epochs: 15
+  learning_rate: 0.0005
+  epochs: 25
   batch_size: 32
   num_filters: [32, 64, 128]
   random_seed: 42
