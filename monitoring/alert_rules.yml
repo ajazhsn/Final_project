@@ -1,0 +1,52 @@
+groups:
+  - name: plant_disease_alerts
+    rules:
+      # High error rate
+      - alert: HighErrorRate
+        expr: rate(plant_prediction_errors_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High prediction error rate"
+          description: "Error rate is above 5% for 2 minutes"
+
+      # High inference latency
+      - alert: HighInferenceLatency
+        expr: histogram_quantile(0.95, rate(plant_inference_latency_seconds_bucket[5m])) > 2.0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High inference latency"
+          description: "95th percentile latency is above 2 seconds"
+
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is above 80% for 2 minutes"
+
+      # API down
+      - alert: APIDown
+        expr: up{job="plant-disease-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Plant Disease API is down"
+          description: "API instance {{ $labels.instance }} is down"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 85%"

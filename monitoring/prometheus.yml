@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  # Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Scrape our Plant Disease API
+  - job_name: 'plant-disease-api'
+    static_configs:
+      - targets: 
+          - 'localhost:8000'
+          - 'localhost:8001'
+          - 'localhost:8002'
+    metrics_path: '/metrics'
+
+  # Scrape node_exporter for system metrics
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
