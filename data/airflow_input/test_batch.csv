@@ -1,0 +1,4 @@
+image_path,label
+/mnt/d/Plant Disease Detection/data/raw/Potato___Early_blight/001187a0-57ab-4329-baff-e7246a9edeb0___RS_Early.B 8178.JPG,Potato___Early_blight
+/mnt/d/Plant Disease Detection/data/raw/Tomato_Late_blight/0003faa8-4b27-4c65-bf42-6d9e352ca1a5___RS_Late.B 4946.JPG,Tomato_Late_blight
+/mnt/d/Plant Disease Detection/data/raw/Potato___healthy/00fc2ee5-729f-4757-8aeb-65c3355874f2___RS_HL 1864.JPG,Potato___healthy
