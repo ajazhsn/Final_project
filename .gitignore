@@ -48,3 +48,13 @@ notebooks/.ipynb_checkpoints/
 mlartifacts/
 mlflow.db
 data/production/
+
+# Airflow internals
+airflow/airflow.db
+airflow/airflow-webserver.pid
+airflow/webserver_config.py
+airflow/logs/
+airflow/airflow.cfg
+
+# Database
+data/plantdisease.db
