@@ -50,24 +50,27 @@ services:
   # MLFLOW — Experiment tracking
   # ─────────────────────────────────────────
   mlflow:
-    image: python:3.12-slim
+    image: ghcr.io/mlflow/mlflow:v3.11.1
     container_name: plant-mlflow
-    working_dir: /mlflow
+    command:
+      - mlflow
+      - server
+      - --backend-store-uri
+      - sqlite:////mlflow/mlflow.db
+      - --default-artifact-root
+      - /mlflow/mlartifacts
+      - --serve-artifacts
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --allowed-hosts
+      - "*"
     ports:
       - "5000:5000"
-    environment:
-      - PYTHONUNBUFFERED=1
     volumes:
-      - ./mlruns:/mlflow/mlruns
-      - ./mlartifacts:/mlflow/mlartifacts
       - ./mlflow.db:/mlflow/mlflow.db
-    command: >
-      bash -c "pip install mlflow --quiet &&
-               mlflow server
-               --host 0.0.0.0
-               --port 5000
-               --backend-store-uri sqlite:////mlflow/mlflow.db
-               --default-artifact-root /mlflow/mlartifacts"
+      - ./mlartifacts:/mlflow/mlartifacts
     restart: unless-stopped
     networks:
       - plant-network
