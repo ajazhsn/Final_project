@@ -981,7 +981,7 @@ elif page == "🔧 MLOps Tools":
 
     services = [
         ("FastAPI Backend", "http://localhost:8000/health"),
-        ("MLflow Server", "http://localhost:5000/api/2.0/mlflow/experiments/list"),
+        ("MLflow Server", "http://localhost:5000/health"),
         ("Prometheus", "http://localhost:9090/-/healthy"),
         ("Grafana", "http://localhost:3000/api/health"),
         ("Airflow", "http://localhost:8080/api/v1/health"),
