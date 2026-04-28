@@ -18,9 +18,9 @@ scrape_configs:
   - job_name: 'plant-disease-api'
     static_configs:
       - targets:
-          - 'backend:8000'
-          - 'backend:8001'
-          - 'backend:8002'
+          - 'plantdiseasedetection-backend-1:8000'
+          - 'plantdiseasedetection-backend-2:8000'
+          - 'plantdiseasedetection-backend-3:8000'
     metrics_path: '/metrics'
 
   - job_name: 'node'

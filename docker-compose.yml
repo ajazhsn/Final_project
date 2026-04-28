@@ -175,7 +175,17 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./data:/opt/airflow/data
       - airflow-data:/opt/airflow
-    command: webserver
+    command: >
+      bash -c "airflow db init &&
+               airflow users create
+               --username admin
+               --password admin123
+               --firstname Ajaz
+               --lastname Hussain
+               --role Admin
+               --email da25m006@smail.iitm.ac.in
+               || true &&
+               airflow webserver"
     restart: unless-stopped
     networks:
       - plant-network
@@ -197,7 +207,8 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./data:/opt/airflow/data
       - airflow-data:/opt/airflow
-    command: scheduler
+    command: >
+      bash -c "sleep 30 && airflow scheduler"
     depends_on:
       - airflow-webserver
     restart: unless-stopped
