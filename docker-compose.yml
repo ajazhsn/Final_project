@@ -1,20 +1,32 @@
-version: "3.8"
-
 services:
+  # ─────────────────────────────────────────
+  # INFERENCE BACKEND — 3 replicas
+  # ─────────────────────────────────────────
   backend:
     image: plant-disease-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000-8002:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
     volumes:
       - ./logs:/app/logs
       - ./models:/app/models
+    depends_on:
+      - mlflow
     restart: unless-stopped
+    networks:
+      - plant-network
 
+  # ─────────────────────────────────────────
+  # FRONTEND — Streamlit
+  # ─────────────────────────────────────────
   frontend:
     image: python:3.12-slim
-    container_name: plant-disease-frontend
+    container_name: plant-frontend
     working_dir: /app
     ports:
       - "8501:8501"
@@ -31,7 +43,175 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # MLFLOW — Experiment tracking
+  # ─────────────────────────────────────────
+  mlflow:
+    image: python:3.12-slim
+    container_name: plant-mlflow
+    working_dir: /mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+      - ./mlartifacts:/mlflow/mlartifacts
+      - ./mlflow.db:/mlflow/mlflow.db
+    command: >
+      bash -c "pip install mlflow --quiet &&
+               mlflow server
+               --host 0.0.0.0
+               --port 5000
+               --backend-store-uri sqlite:///mlflow.db
+               --default-artifact-root /mlflow/mlartifacts"
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # PROMETHEUS — Metrics collection
+  # ─────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: plant-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # ALERTMANAGER — Alert routing
+  # ─────────────────────────────────────────
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: plant-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # GRAFANA — Dashboard
+  # ─────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: plant-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana_dashboard.json:/etc/grafana/provisioning/dashboards/plant_dashboard.json
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # NODE EXPORTER — System metrics
+  # ─────────────────────────────────────────
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: plant-node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  # ─────────────────────────────────────────
+  # AIRFLOW — Pipeline orchestration
+  # ─────────────────────────────────────────
+  airflow-webserver:
+    image: apache/airflow:2.9.3
+    container_name: plant-airflow-webserver
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - AIRFLOW__CORE__FERNET_KEY=''
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=false
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRFLOW__SMTP__SMTP_HOST=sandbox.smtp.mailtrap.io
+      - AIRFLOW__SMTP__SMTP_PORT=2525
+      - AIRFLOW__SMTP__SMTP_USER=0efd76baea3c67
+      - AIRFLOW__SMTP__SMTP_PASSWORD=d5457ff66c0532
+      - AIRFLOW__SMTP__SMTP_MAIL_FROM=plantdisease@mlops.com
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin123
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - airflow-data:/opt/airflow
+    command: webserver
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+  airflow-scheduler:
+    image: apache/airflow:2.9.3
+    container_name: plant-airflow-scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - AIRFLOW__CORE__FERNET_KEY=''
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRFLOW__SMTP__SMTP_HOST=sandbox.smtp.mailtrap.io
+      - AIRFLOW__SMTP__SMTP_PORT=2525
+      - AIRFLOW__SMTP__SMTP_USER=0efd76baea3c67
+      - AIRFLOW__SMTP__SMTP_PASSWORD=d5457ff66c0532
+      - AIRFLOW__SMTP__SMTP_MAIL_FROM=plantdisease@mlops.com
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - airflow-data:/opt/airflow
+    command: scheduler
+    depends_on:
+      - airflow-webserver
+    restart: unless-stopped
+    networks:
+      - plant-network
+
+# ─────────────────────────────────────────
+# VOLUMES & NETWORKS
+# ─────────────────────────────────────────
+volumes:
+  prometheus-data:
+  grafana-data:
+  airflow-data:
 
 networks:
-  default:
-    name: plant-disease-network
+  plant-network:
+    driver: bridge
