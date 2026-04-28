@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-04-28T09:13:22.286386",
+  "threshold": 0.15,
+  "features": {
+    "mean_r": {
+      "baseline_mean": 0.4119,
+      "production_mean": 0.0968,
+      "relative_difference": 0.7649,
+      "drifted": true
+    },
+    "mean_g": {
+      "baseline_mean": 0.4313,
+      "production_mean": 0.1265,
+      "relative_difference": 0.7067,
+      "drifted": true
+    },
+    "mean_b": {
+      "baseline_mean": 0.3703,
+      "production_mean": 0.08,
+      "relative_difference": 0.7841,
+      "drifted": true
+    },
+    "std_r": {
+      "baseline_mean": 0.1727,
+      "production_mean": 0.1242,
+      "relative_difference": 0.2806,
+      "drifted": true
+    },
+    "std_g": {
+      "baseline_mean": 0.1616,
+      "production_mean": 0.1565,
+      "relative_difference": 0.0315,
+      "drifted": false
+    },
+    "std_b": {
+      "baseline_mean": 0.1837,
+      "production_mean": 0.1032,
+      "relative_difference": 0.4383,
+      "drifted": true
+    },
+    "brightness": {
+      "baseline_mean": 0.4045,
+      "production_mean": 0.1011,
+      "relative_difference": 0.7501,
+      "drifted": true
+    },
+    "contrast": {
+      "baseline_mean": 0.1769,
+      "production_mean": 0.1318,
+      "relative_difference": 0.2549,
+      "drifted": true
+    }
+  },
+  "drift_detected": true,
+  "drifted_features": [
+    "mean_r",
+    "mean_g",
+    "mean_b",
+    "std_r",
+    "std_b",
+    "brightness",
+    "contrast"
+  ]
+}
