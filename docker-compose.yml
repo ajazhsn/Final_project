@@ -158,7 +158,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
       - AIRFLOW__CORE__FERNET_KEY=''
       - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=false
@@ -175,17 +175,7 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./data:/opt/airflow/data
       - airflow-data:/opt/airflow
-    command: >
-      bash -c "airflow db init &&
-               airflow users create
-               --username admin
-               --password admin123
-               --firstname Ajaz
-               --lastname Hussain
-               --role Admin
-               --email da25m006@smail.iitm.ac.in
-               || true &&
-               airflow webserver"
+    command: [ "bash", "-c", "airflow db init && airflow users create --username admin --password admin123 --firstname Ajaz --lastname Hussain --role Admin --email da25m006@smail.iitm.ac.in || true && airflow webserver" ]
     restart: unless-stopped
     networks:
       - plant-network
@@ -194,7 +184,7 @@ services:
     image: apache/airflow:2.9.3
     container_name: plant-airflow-scheduler
     environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
       - AIRFLOW__CORE__FERNET_KEY=''
       - AIRFLOW__CORE__LOAD_EXAMPLES=false
@@ -207,8 +197,7 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./data:/opt/airflow/data
       - airflow-data:/opt/airflow
-    command: >
-      bash -c "sleep 30 && airflow scheduler"
+    command: [ "bash", "-c", "sleep 40 && airflow scheduler" ]
     depends_on:
       - airflow-webserver
     restart: unless-stopped
